@@ -1,15 +1,23 @@
 import unittest
 from datetime import date
-from utils.mock import Mock
+from uuid import UUID
+from utils.personal import PersonalAgenda
 
 
 class TestMock(unittest.TestCase):
 
-    def test_get_list(self):
-        expected_list = [{'id': 1, 'name': 'estudar',
-                          'endDate': date.today(),
-                          'description': 'Estudar para o TCC'}]
-        self.assertEqual(Mock.get_list(), expected_list)
+    def setUp(self) -> None:
+        self.event = {'name': 'estudar', 'endDate': date.today(),
+                      'description': 'Estudar para o TCC'}
+        return super().setUp()
+
+    def test_a_get_list(self):
+        expected_list = []
+        self.assertEqual(PersonalAgenda.get_list(), expected_list)
+
+    def test_b_create_event(self):
+        new_event = PersonalAgenda.create_event(self.event)
+        self.assertIsInstance(new_event.id, UUID)
 
 
 if __name__ == '__main__':
